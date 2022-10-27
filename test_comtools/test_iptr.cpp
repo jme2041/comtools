@@ -367,6 +367,13 @@ namespace test_iptr
             Assert::IsTrue((bool)p2);
         }
 
+        TEST_METHOD(CopyToNull)
+        {
+            auto p1(pA);
+            Assert::IsTrue((bool)p1);
+            Assert::AreEqual(E_POINTER, p1.CopyTo(nullptr));
+        }
+
         TEST_METHOD(CopyTo)
         {
             // Hand out another reference to the same interface without QI
@@ -374,7 +381,7 @@ namespace test_iptr
             Assert::IsTrue((bool)p1);
             IPtr<IA> p2;
             Assert::IsFalse((bool)p2);
-            p1.CopyTo(set(p2));
+            Assert::IsTrue(SUCCEEDED(p1.CopyTo(set(p2))));
             Assert::IsTrue((bool)p2);
             p2->Method1(L"I came from CopyTo");
         }

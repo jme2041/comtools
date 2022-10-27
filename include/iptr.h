@@ -208,10 +208,12 @@ namespace ComTools {
             InternalCopy(other);
         }
 
-        void CopyTo(T** other) noexcept
+        HRESULT CopyTo(T** other) noexcept
         {
+            if (!other) return E_POINTER;
             InternalAddRef();
             *other = m_ptr;
+            return S_OK;
         }
     };
 
